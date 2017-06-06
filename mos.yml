@@ -12,6 +12,7 @@ libs:
 
 tags:
   - js
-  - arduino-onewire
+  - arduino-core
+  - arduino
 
 skeleton_version: 2017-05-18
