@@ -1,9 +1,7 @@
 author: mongoose-os
-name: arduino-onewire
-description: Arduino OneWire app
-# arch: PLATFORM
+description: Arduino OneWire API usage example (JavaScript)
 version: 1.0
-skeleton_version: 2017-05-18
+
 sources:
   - src
 filesystem:
@@ -11,6 +9,9 @@ filesystem:
 libs:
   - origin: https://github.com/mongoose-os-libs/mjs
   - origin: https://github.com/mongoose-os-libs/arduino-onewire
+
 tags:
   - js
   - arduino-onewire
+
+skeleton_version: 2017-05-18
