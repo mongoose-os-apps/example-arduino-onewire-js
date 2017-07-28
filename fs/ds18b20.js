@@ -10,7 +10,7 @@
 load('api_arduino_onewire.js');
 
 let GPIO = {
-  PIN: 13 // GPIO pin which has sensors data wire connected
+  PIN: 21 // GPIO pin which has sensors data wire connected
 };
 
 let DEVICE_FAMILY = {
@@ -58,7 +58,7 @@ let getTemp = function(rom) {
   let raw;
   let cfg;
 
-  ow.reset();
+  if (ow.reset() === 0) return NaN;
   ow.select(rom);
   ow.write(CMD.CONVERT_T);
 

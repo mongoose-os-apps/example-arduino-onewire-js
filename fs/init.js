@@ -46,6 +46,12 @@ Timer.set(1000 /* milliseconds */, true /* repeat */, function() {
   }
 
   for (let i = 0; i < n; i++) {
-    print('Sensor#', i, 'Temperature:', getTemp(rom[i]), '*C');
+    let t = getTemp(rom[i]);
+    if (isNaN(t)) {
+      print('No device found');
+      break;
+    } else {
+      print('Sensor#', i, 'Temperature:', t, '*C');
+    }
   }
 }, null);
