@@ -7,10 +7,12 @@
  * Datasheet: http://datasheets.maximintegrated.com/en/ds/DS18B20.pdf
  */
 
-// Load Mongoose OS API
+load('api_arduino_onewire.js');
 load('api_timer.js');
-// Load example DS18B20
 load('ds18b20.js');
+
+// Initialize OneWire library
+let ow = OneWire.create(21 /* pin */);
 
 // Number of sensors found on the 1-Wire bus
 let n = 0;
@@ -46,7 +48,7 @@ Timer.set(1000 /* milliseconds */, true /* repeat */, function() {
   }
 
   for (let i = 0; i < n; i++) {
-    let t = getTemp(rom[i]);
+    let t = getTemp(ow, rom[i]);
     if (isNaN(t)) {
       print('No device found');
       break;

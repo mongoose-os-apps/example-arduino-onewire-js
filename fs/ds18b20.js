@@ -7,18 +7,9 @@
  * Datasheet: http://datasheets.maximintegrated.com/en/ds/DS18B20.pdf
  */
 
-load('api_arduino_onewire.js');
-
-let GPIO = {
-  PIN: 21 // GPIO pin which has sensors data wire connected
-};
-
 let DEVICE_FAMILY = {
   DS18B20: 0x28
 };
-
-// Initialize OneWire library
-let ow = OneWire.create(GPIO.PIN);
 
 // Get device address in hex format
 let toHexStr = function(addr) {
@@ -34,7 +25,7 @@ let toHexStr = function(addr) {
 };
 
 // This function reads data from the DS18B20 temperature sensor
-let getTemp = function(rom) {
+function getTemp(ow, rom) {
   let DATA = {
     TEMP_LSB: 0,
     TEMP_MSB: 1,
@@ -54,10 +45,6 @@ let getTemp = function(rom) {
     READ_SCRATCHPAD: 0xBE
   };
 
-  let data = [];
-  let raw;
-  let cfg;
-
   if (ow.reset() === 0) return NaN;
   ow.select(rom);
   ow.write(CMD.CONVERT_T);
@@ -65,16 +52,17 @@ let getTemp = function(rom) {
   ow.delay(750);
 
   ow.reset();
-  ow.select(rom);    
+  ow.select(rom);
   ow.write(CMD.READ_SCRATCHPAD);
 
+  let data = [];
   for (let i = 0; i < DATA.SCRATCHPAD_SIZE; i++) {
     data[i] = ow.read();
   }
 
-  raw = (data[DATA.TEMP_MSB] << 8) | data[DATA.TEMP_LSB];
-  cfg = (data[DATA.REG_CONF] & REG_CONF.RESOLUTION_MASK);
-  
+  let raw = (data[DATA.TEMP_MSB] << 8) | data[DATA.TEMP_LSB];
+  let cfg = (data[DATA.REG_CONF] & REG_CONF.RESOLUTION_MASK);
+
   if (cfg === REG_CONF.RESOLUTION_9BIT) {
     raw = raw & ~7;
   } else if (cfg === REG_CONF.RESOLUTION_10BIT) {
