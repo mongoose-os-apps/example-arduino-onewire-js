@@ -40,7 +40,7 @@ let searchSens = function() {
 };
 
 // This function prints temperature every second
-Timer.set(1000 /* milliseconds */, true /* repeat */, function() {
+Timer.set(1000 /* milliseconds */, Timer.REPEAT, function() {
   if (n === 0) {
     if ((n = searchSens()) === 0) {
       print('No device found');
