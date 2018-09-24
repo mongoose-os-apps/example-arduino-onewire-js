@@ -11,6 +11,7 @@ sources:
 filesystem:
   - fs
 libs:
+  - origin: https://github.com/mongoose-os-libs/boards
     # common mgos libs
   - origin: https://github.com/mongoose-os-libs/ca-bundle
   - origin: https://github.com/mongoose-os-libs/i2c
