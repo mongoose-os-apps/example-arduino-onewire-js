@@ -71,6 +71,10 @@ function getTemp(ow, rom) {
     raw = raw & ~1;
   }
   // Default resolution is 12 bit
+  //
+  if ((raw & 0x8000) > 0) {
+    raw = raw - 0x10000;
+  }
 
   return raw / 16.0;
 };
